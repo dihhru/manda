@@ -7,12 +7,11 @@ let canvas1 = document.getElementById("canvas1");
 let ctx1 = canvas1.getContext("2d");
 ctx1.drawImage(document.getElementById("img"), 0, 0, 500, 500),
   (window.onload = function() {
-    var width = 225;
-    var height = 225;
+    var width = 500;
+    var height = 500;
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
     var image = document.getElementById("img");
-
     var doFindFeatures = function() {
       context.drawImage(image, 0, 0, width, height);
       var imageData = context.getImageData(0, 0, width, height);
