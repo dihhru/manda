@@ -19,7 +19,7 @@ ctx1.drawImage(document.getElementById("img"), 0, 0, 500, 500),
       for (var i = 0; i < gray.length; i++) {
         imageData.data[i] = gray[i];
       }
-
+      console.log(gray.length);
       context.clearRect(0, 0, canvas.width, canvas.height);
       context.putImageData(imageData, 0, 0);
     };
