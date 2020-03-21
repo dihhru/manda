@@ -19,11 +19,10 @@ ctx1.drawImage(document.getElementById("img"), 0, 0, 500, 500),
       var gray = tracking.Image.sobel(imageData.data, width, height);
 
       for (var i = 0; i < gray.length; i++) {
-        console.log(gray);
         imageData.data[i] = gray[i];
       }
-
       context.clearRect(0, 0, canvas.width, canvas.height);
+      console.log(imageData);
       context.putImageData(imageData, 0, 0);
     };
 
