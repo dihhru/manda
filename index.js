@@ -17,12 +17,11 @@ ctx1.drawImage(document.getElementById("img"), 0, 0, 500, 500),
       var imageData = context.getImageData(0, 0, width, height);
 
       var gray = tracking.Image.sobel(imageData.data, width, height);
-
+      console.log(gray.length);
       for (var i = 0; i < gray.length; i++) {
         imageData.data[i] = gray[i];
       }
       context.clearRect(0, 0, canvas.width, canvas.height);
-      console.log(imageData);
       context.putImageData(imageData, 0, 0);
     };
 
