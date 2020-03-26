@@ -139,23 +139,18 @@ button.controls:hover {
 }
 
 button.controls.synth {
-  background-color: var(--pink);
   color: white;
 }
 
 button.controls.drums {
-  background-color: var(--blue);
 }
 
-#btnPlay {
-  background-color: var(--green);
-}
 
 /***********************
  * Note pixels
  ***********************/
 button.pixel {
-  filter: grayscale(100%);
+ 
   display: inline-block;
   -webkit-appearance: none;
   appearance: none;
@@ -164,13 +159,17 @@ button.pixel {
   letter-spacing: inherit;
   cursor: pointer;
   font-family: monospace;
-  background: var(--yellow);
   height: 25px;
   width: 25px;
   border: none;
   padding: 0;
 }
-
+.on {
+  filter: none;
+}
+.off  {
+    filter: grayscale(100%);
+}
 /***********************
  * Note pixels
  ***********************/
@@ -186,7 +185,9 @@ background: yellow
 .red   {
   background: red;
 }
-
+.grey   {
+    background: grey
+}
 
 /***********************
  * Note pixels
@@ -194,7 +195,7 @@ background: yellow
 button.pixel:hover {
   opacity: 0.7;
 }
-button.pixel.on.synth {
+/* button.pixel.on.synth {
   background: var(--pink);
   xbox-shadow: 0 0 5px var(--pink);
 }
@@ -214,7 +215,7 @@ button.pixel.ripple.drums {
   background: var(--blue);
   opacity: 0.3;
   box-shadow: 0 0 5px var(--purple);
-}
+} */
 
 .playing .pixel.on.active {
   transform: scale(1.5);

@@ -108,6 +108,7 @@ class Board {
         const button = document.createElement('button');
         button.setAttribute('aria-label', 'cell, empty');
         button.classList.add('pixel');
+        button.classList.add('off');
         button.dataset.row = i;
         button.dataset.col = j;
         rowEl.appendChild(button);
@@ -121,13 +122,19 @@ class Board {
   // Toggles a particular dot from on to off.
   toggleCell(i,j, sound, uiButton) {
     const dot = this.data[i][j];
-    if (dot.on) {
-      dot.on = 0;
-    } else {
-      dot.on = sound;
-    }
-    
-    uiButton.setAttribute('aria-label', sound === 1 ? 'cell, synth' : 'cell, drums');
+    //0 - white
+//1 - yellow
+//2 - red 
+//3 - blue 
+//4 - grey
+    // if (dot.on) {
+    //   dot.on = 0;
+    // } else {
+    //   dot.on = sound;
+    // }
+    let isToggled = uiButton.classList.contains('off')
+    isToggled?
+    uiButton.classList.remove('off'):uiButton.classList.add('off')
     this.draw();
   }
   
@@ -188,8 +195,12 @@ class Board {
   
   // Paints the current state of the world.
   draw() {
+  //0 - white
+//1 - yellow
+//2 - red 
+//3 - blue 
+//4 - grey
     this._updateRipples();
-    
     for (let i = 0; i < 16; i++) {
       const pixels = this.ui.rows[i].querySelectorAll('.pixel');
       
@@ -274,10 +285,37 @@ class Board {
   
    // Displays the right sound on a UI cell, if it's on.
   _paintSoundCell(dataCell, uiCell) {
+ 
     let didIt = false;
     if (dataCell.on) {
       uiCell.classList.add('on');
-      
+      //0 - white
+//1 - yellow
+//2 - red 
+//3 - blue 
+//4 - grey
+let type  
+switch(dataCell.on) {
+  case 0: 
+   type = 'white'
+    break
+  case 1: 
+  type = "yellow"
+  break;
+  case 2:
+  type = "red"
+    break;
+  case 3:
+  type = "blue"
+    break;
+  case 4:
+  type = "grey"
+    break;
+  default:
+    type = "white"
+    break;
+}
+      uiCell.classList.add(type)
       // You may have clicked on this when it was part of a ripple.
       uiCell.classList.remove('ripple');
       
