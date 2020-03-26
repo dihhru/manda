@@ -11,22 +11,20 @@
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-  
-    <img  src="button/note.png"
-    class="controls glitcheroni synth" width=50   onclick="playSynth()" title="Adding synth sounds">
-      Piano
-    </img>
-    <img src="button/drum.png"  width=50   onclick="playDrums()" title="Adding drum sounds"> </img>
-    <br>
-    <label class="controls glitcheroni">Step<input placeholder="100" type="number" value="100" id="input">ms</label>
-    <img src="button/play.png" width=50  id="btnPlay" onclick="playOrPause()">
-    </img>
-    <button class="controls glitcheroni" onclick="reset(true)">
-      Reset
-    </button>
-    <button class="controls glitcheroni" onclick="showHelp()" title="Help">
-      ?
-    </button>
+    <div style="display: flex; justify-content: center;">
+          <img src="button/note.png" width=50 onclick="playSynth()" title="Adding synth sounds">
+          </img>
+          <img src="button/drum.png" width=50 onclick="playDrums()" title="Adding drum sounds"> </img>
+          <img src="button/restart.png" onclick="reset(true)">
+            Reset
+          </img>
+          <button class="controls glitcheroni" onclick="showHelp()" title="Help">
+            ?
+          </button>
+                    <!-- <label class="controls glitcheroni">Step<input placeholder="100" type="number" value="100" id="input">ms</label>
+                              <img src="button/play.png" width=50 id="btnPlay" onclick="playOrPause()">
+                              </img> -->
+    </div>
     <br><br>
     
     <div class="dialog glitcheroni" id="help" hidden>
