@@ -12,18 +12,20 @@
   </head>
   <body>
     <div style="display: flex; justify-content: center;">
-          <img src="button/note.png" width=50 onclick="playSynth()" title="Adding synth sounds">
+          <img src="button/note.png" width=50 height="50" onclick="playSynth()" title="Adding synth sounds">
           </img>
-          <img src="button/drum.png" width=50 onclick="playDrums()" title="Adding drum sounds"> </img>
-          <img src="button/restart.png" onclick="reset(true)">
-            Reset
+          <img src="button/drum.png" width=50 height="50" onclick="playDrums()" title="Adding drum sounds"> </img>
+          <img src="button/restart.png"   width=50 height="50" onclick="reset(true)">
           </img>
-          <button class="controls glitcheroni" onclick="showHelp()" title="Help">
-            ?
-          </button>
-                    <!-- <label class="controls glitcheroni">Step<input placeholder="100" type="number" value="100" id="input">ms</label>
+          <img src="button/question.png"   width=50 height="50" onclick="showHelp()">
+          
+          </img>
+                    <label>
+                      <img  width=50 height="50" src="button/metro.png"> </img>
+                      <input placeholder="100" type="range" value="100" id="input">
+                    </label>
                               <img src="button/play.png" width=50 id="btnPlay" onclick="playOrPause()">
-                              </img> -->
+                              </img>
     </div>
     <br><br>
     

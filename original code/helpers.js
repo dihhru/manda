@@ -1,6 +1,22 @@
 /***********************************
  * Makes synth or drum noises
  ***********************************/
+//'w' - white
+//'y' - yellow
+//'r' - red 
+//'b' - blue 
+//'g' - grey
+// const data = [
+//   ['w', 'y', 'w', 'r', 'w', 'w', 'y', 'w', 'w', 'w', 'w', 'w', 'r', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'y', 'w', 'r', 'w', 'y'],
+//   ['y', 'b', 'y', 'y', 'y', 'y', 'y', 'y', 'b', 'y', 'y', 'g', 'y', 'y', 'y', 'y', 'y', 'y', 'g', 'y', 'y', 'b', 'y', 'g', 'y', 'b'],
+//   ['w', 'g', 'w', 'g', 'w', 'w', 'y', 'w', 'r', 'r', 'r', 'w', 'g', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'g', 'w', 'b', 'w', 'g'],
+//   ['w', 'y', 'w', 'y', 'w', 'w', 'g', 'y', 'r', 'r', 'r', 'y', 'y', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'g', 'w', 'y'],
+//   ['w', 'y', 'w', 'y', 'w', 'w', 'g', 'y', 'r', 'r', 'r', 'y', 'y', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'y', 'w', 'g'],
+//   ['w', 'y', 'w', 'y', 'w', 'w', 'g', 'y', 'r', 'r', 'r', 'y', 'y', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'y', 'w', 'g'],
+//   ['w', 'b', 'w', 'r', 'w', 'w', 'b', 'w', 'g', 'g', 'g', 'w', 'b', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'r', 'b', 'b'],
+//   ['w', 'y', 'w', 'y', 'w', 'w', 'y', 'w', 'r', 'r', 'r', 'w', 'g', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'b', 'w', 'y', 'b', 'b'].
+//     ['w', 'y', 'w', 'g', 'w', 'w', 'y', 'w', 'r', 'r', 'r', 'w', 'b', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'g', 'w', 'w'],
+// ]
 class NoiseyMakey {
   constructor() {
     this.synth = this._makeASynth();
@@ -97,13 +113,13 @@ class Board {
     this.ui.container = document.getElementById('container');
     this.ui.container.innerHTML = '';
     
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 25; i++) {
       this.data.push([]);
       const rowEl = document.createElement('div');
       rowEl.classList.add('row');
       this.ui.container.appendChild(rowEl);
       
-      for (let j = 0; j < 16; j++) {
+      for (let j = 0; j < 31; j++) {
         this.data[i][j] = {};
         const button = document.createElement('button');
         button.setAttribute('aria-label', 'cell, empty');
