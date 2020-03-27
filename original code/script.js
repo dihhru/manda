@@ -248,27 +248,142 @@ function decode(bits) {
 
 function check(x,y,color)   {
 let coords = [] 
-let i = 0;
-let toggle = true 
-loop:while (i<26) { 
-  if (toggle) {
-    let id = x + ' ' + Number(y-i)
-    let cell = document.getElementById(id)
-    cell.dataset.color === color ?
-    coords.push(id):toggle=false 
+let arr = []
+let i = 0
+  next:while (i<26) { 
+  let next = Number(y + i)
+  let id = x + ' ' + next 
+  let cell = document.getElementById(id)
+  
+  let type = cell.dataset.color 
+  if (type === color) {
+    coords.push(next)
+    i++
   }
   else  {
-    let id = x - i + ' ' + y + i 
-    let cell = document.getElementById(id)
-    if(cell.dataset.color === color) {
-      coords.push(id)
-    }
-   else {break loop}
+   break next
   }
- i++
 }
+let i1=1
+  prev:while (i1 < 26) {
+  let next = Number(y - i1)
+  let id = x + ' ' + next
 
+  let cell = document.getElementById(id)
+  let type = cell.dataset.color
+  if (type === color) {
+    coords.push(next)
+    i1++
+  }
+  else {
+break prev
+  }
 }
+    coords.map(function (y) {
+      let i=0
+      next: while (i < 26) {
+        let next = Number(x + i)
+        let id = next + ' ' + y
+        let cell = document.getElementById(id)
+        if (!document.body.contains(cell)) {
+          break next
+        }
+        let type = cell.dataset.color
+        if (type === color) {
+          arr.push(id)
+          i++
+        }
+        else {
+          break next
+        }
+      }
+      let i1 = 1
+      prev: while (i1 < 26) {
+        let next = Number(x - i1)
+        let id = next + ' ' + y
+        let cell = document.getElementById(id)
+        if (!document.body.contains(cell))
+        {
+           break prev
+        
+        }
+        let type = cell.dataset.color
+        if (type === color) {
+          arr.push(id)
+          i1++
+        }
+        else {
+          break prev
+        }
+      }
+    })
+    arr.map(function (id) {
+         let doc = document.getElementById(id)
+      let isToggled = doc.classList.contains('off')
+      isToggled ?
+        doc.classList.remove('off') : doc.classList.add('off')
+    })
+  }
+
+
+
+
+//   let toggle1 = true
+// coords.map(
+//   function (y)  {
+//     let i = 0 
+//     while (i<26)  {
+//       let id = x + i + ' ' + y
+//     }
+
+  
+
+
+
+      // let id = x + ' ' + y 
+      // let doc = document.getElementById(id)
+      // let isToggled = doc.classList.contains('off')
+      // isToggled ?
+      //   doc.classList.remove('off') : doc.classList.add('off')
+
+
+
+
+
+//   loop1: while (i < 26) {
+//     if (toggle1) {
+//       let id = x + ' ' + Number(y - i)
+//       let cell = document.getElementById(id)
+//       let type = cell.dataset.color
+//       if (type === color) {
+//         coords.push(id)
+//       }
+//       else {
+//         toggle1 = false
+//         i = 0
+//       }
+//     }
+//     else {
+//       let id = x + ' ' + Number(y + i)
+//       let cell = document.getElementById(id)
+//       console.log(id)
+//       console.log(cell)
+//       let type = cell.dataset.color
+//       if (type === color) {
+//         coords.push(id)
+//       }
+//       else { break loop1 }
+//     }
+//     i++
+//   }
+
+// coords.map(function(x)  {
+//   let doc = document.getElementById(x)
+//   let isToggled = doc.classList.contains('off')
+//   isToggled ?
+//     doc.classList.remove('off') : doc.classList.add('off')
+// })
+// }
 // let prev = x - i
 // let doc = document.getElementById(prev + ' ' + y)
 // if (doc.dataset.color === color) {

@@ -151,10 +151,8 @@ class Board {
     // }
   
     let color = uiButton.dataset.color
-    check(i,j, color)  
-    let isToggled = uiButton.classList.contains('off')
-    isToggled?
-    uiButton.classList.remove('off'):uiButton.classList.add('off')
+    check(i,j,color)  
+
     this.draw();
   }
   
