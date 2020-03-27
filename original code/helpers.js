@@ -125,9 +125,9 @@ class Board {
         button.setAttribute('aria-label', 'cell, empty');
         button.classList.add('pixel');
         button.classList.add('off');
+        button.id = i+' ' +  j
         button.dataset.row = i;
         button.dataset.col = j;
-        button.id = i + '' + j
         rowEl.appendChild(button);
       }
     }
@@ -149,6 +149,9 @@ class Board {
     // } else {
     //   dot.on = sound;
     // }
+  
+    let color = uiButton.dataset.color
+    check(i,j, color)  
     let isToggled = uiButton.classList.contains('off')
     isToggled?
     uiButton.classList.remove('off'):uiButton.classList.add('off')
@@ -333,6 +336,7 @@ switch(dataCell.on) {
     break;
 }
       uiCell.classList.add(type)
+      uiCell.dataset.color=type
       // You may have clicked on this when it was part of a ripple.
       uiCell.classList.remove('ripple');
       
