@@ -168,7 +168,7 @@ button.pixel {
   filter: none;
 }
 .off  {
-    filter: grayscale(100%);
+    /* filter: grayscale(100%); */
 }
 /***********************
  * Note pixels

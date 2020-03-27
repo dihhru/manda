@@ -62,7 +62,7 @@ class NoiseyMakey {
   // TODO: should probably use magenta's synth for this, maybe:
   // this.magentaPlayer.playNote({startTime: which, endTime: which + 1, pitch: 35, velocity: 100, isDrum: false}, '16n');
   playSynth(which) {
-    this.synth.triggerAttackRelease(this.synthSounds[which], '16n');
+    this.synth.triggerAttackRelease(this.synthSounds[which], '26n');
   }
   
   playDrum(which) {
@@ -119,7 +119,7 @@ class Board {
       rowEl.classList.add('row');
       this.ui.container.appendChild(rowEl);
       
-      for (let j = 0; j < 31; j++) {
+      for (let j = 0; j <26; j++) {
         this.data[i][j] = {};
         const button = document.createElement('button');
         button.setAttribute('aria-label', 'cell, empty');
@@ -127,6 +127,7 @@ class Board {
         button.classList.add('off');
         button.dataset.row = i;
         button.dataset.col = j;
+        button.id = i + '' + j
         rowEl.appendChild(button);
       }
     }
@@ -160,7 +161,7 @@ class Board {
     
     const drumPitches = [36, 38, 42, 46, 45, 48, 50, 49, 51, 35, 27, 29, 47, 55, 52, 44];
     for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 16; j++) {
+      for (let j = 0; j < 26; j++) {
         // Found a synth note!
         if (this.data[i][j].on === 1) {
           sequence.notes.push(
@@ -217,16 +218,16 @@ class Board {
 //3 - blue 
 //4 - grey
     this._updateRipples();
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 25; i++) {
       const pixels = this.ui.rows[i].querySelectorAll('.pixel');
       
-      for (let j = 0; j < 16; j++) {
+      for (let j = 0; j<26; j++) {
         // Maybe it's a sound?
         if (this._paintSoundCell(this.data[i][j], pixels[j])) {
           continue;
         }
         // Maybe it's part of a ripple?
-        this._paintRippleCell(pixels[j], i, j);
+
       }
     }
   }

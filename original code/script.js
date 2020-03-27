@@ -91,7 +91,7 @@ function animate() {
     
     // Get ready for the next column.
     currentColumn++;
-    if (currentColumn === 16) {
+    if (currentColumn === 26) {
       currentColumn = 0;
     }
     
@@ -113,7 +113,7 @@ function animate() {
 function loadDemo(which) {
   switch(which) {
     case 1:
-      board.data = decode('1234000000000000000000000000000022222000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000200020002000200000000000000000000000000000000000000000101000000000000001010101010010000010101010');
+      board.data = decode('010200100000200000000102011311111131141111114113141304040010222040222220040304010100412221102222200104010101004122211022222001010401010041222110222220010104030200304440302222200102330101001022204022222003013301040010222030222220010400');
       break;
     case 2:
       board.data = decode('0000000000000000000000000000000000000000000000000000011001100000000001100110000000020000000020000002000000002000000020000002000000000222222000000000000000000000001000010000000000100000001101100011100100121210001010010001210000101001000010000000000000000000');
@@ -182,7 +182,7 @@ function autoDrums() {
     setTimeout(() => {
       const sequence = board.getSynthSequence(); 
       // High temperature to get interesting beats!
-      const dreamSequence = rnn.continueSequence(sequence, 16, 1.3).then((dream) => {
+      const dreamSequence = rnn.continueSequence(sequence, 25, 1.3).then((dream) => {
         board.drawDreamSequence(dream, sequence);
         
         updateLocation();
@@ -219,8 +219,8 @@ function updateLocation() {
 }
 function encode(arr) {
   let bits = '';
-  for (let i = 0; i < 16; i++) {
-    for (let j = 0; j < 16; j++) {
+  for (let i = 0; i < 26; i++) {
+    for (let j = 0; j < 26; j++) {
       bits += arr[i][j].on ? arr[i][j].on : 0;
     }
   }
@@ -229,12 +229,12 @@ function encode(arr) {
 
 function decode(bits) {
   const arr = [];
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < 26; i++) {
     let row = [];
     arr.push(row);
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < 26; j++) {
       arr[i][j] = {};
-      const c = bits.charAt(i * 16 + j);
+      const c = bits.charAt(i * 26 + j);
       if (c != '0') {
         arr[i][j].on = parseInt(c);
       }
