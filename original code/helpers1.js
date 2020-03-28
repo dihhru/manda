@@ -1,22 +1,6 @@
 /***********************************
  * Makes synth or drum noises
  ***********************************/
-//'w' - white
-//'y' - yellow
-//'r' - red 
-//'b' - blue 
-//'g' - grey
-// const data = [
-//   ['w', 'y', 'w', 'r', 'w', 'w', 'y', 'w', 'w', 'w', 'w', 'w', 'r', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'y', 'w', 'r', 'w', 'y'],
-//   ['y', 'b', 'y', 'y', 'y', 'y', 'y', 'y', 'b', 'y', 'y', 'g', 'y', 'y', 'y', 'y', 'y', 'y', 'g', 'y', 'y', 'b', 'y', 'g', 'y', 'b'],
-//   ['w', 'g', 'w', 'g', 'w', 'w', 'y', 'w', 'r', 'r', 'r', 'w', 'g', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'g', 'w', 'b', 'w', 'g'],
-//   ['w', 'y', 'w', 'y', 'w', 'w', 'g', 'y', 'r', 'r', 'r', 'y', 'y', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'g', 'w', 'y'],
-//   ['w', 'y', 'w', 'y', 'w', 'w', 'g', 'y', 'r', 'r', 'r', 'y', 'y', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'y', 'w', 'g'],
-//   ['w', 'y', 'w', 'y', 'w', 'w', 'g', 'y', 'r', 'r', 'r', 'y', 'y', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'y', 'w', 'g'],
-//   ['w', 'b', 'w', 'r', 'w', 'w', 'b', 'w', 'g', 'g', 'g', 'w', 'b', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'r', 'b', 'b'],
-//   ['w', 'y', 'w', 'y', 'w', 'w', 'y', 'w', 'r', 'r', 'r', 'w', 'g', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'b', 'w', 'y', 'b', 'b'].
-//     ['w', 'y', 'w', 'g', 'w', 'w', 'y', 'w', 'r', 'r', 'r', 'w', 'b', 'w', 'r', 'r', 'r', 'r', 'r', 'w', 'w', 'y', 'w', 'g', 'w', 'w'],
-// ]
 class NoiseyMakey {
   constructor() {
     this.synth = this._makeASynth();
@@ -62,8 +46,7 @@ class NoiseyMakey {
   // TODO: should probably use magenta's synth for this, maybe:
   // this.magentaPlayer.playNote({startTime: which, endTime: which + 1, pitch: 35, velocity: 100, isDrum: false}, '16n');
   playSynth(which) {
-    console.log(which)
-    this.synth.triggerAttackRelease(this.synthSounds[which], '26n');
+    this.synth.triggerAttackRelease(this.synthSounds[which], '16n');
   }
   
   playDrum(which) {
@@ -72,12 +55,12 @@ class NoiseyMakey {
   
   _makeASynth() {
     // Set up tone.
-    const synth = new Tone.PolySynth(26, Tone.Synth).toMaster();
+    const synth = new Tone.PolySynth(16, Tone.Synth).toMaster();
     return synth;
   }
   
   _makeAWham() {
-    const synth = new Tone.PolySynth(6, Tone.Synth, {
+    const synth = new Tone.PolySynth(3, Tone.Synth, {
 			"oscillator" : {
 				"type" : "fatsawtooth",
 				"count" : 3,
@@ -114,19 +97,17 @@ class Board {
     this.ui.container = document.getElementById('container');
     this.ui.container.innerHTML = '';
     
-    for (let i = 0; i < 26; i++) {
+    for (let i = 0; i < 16; i++) {
       this.data.push([]);
       const rowEl = document.createElement('div');
       rowEl.classList.add('row');
       this.ui.container.appendChild(rowEl);
       
-      for (let j = 0; j <26; j++) {
+      for (let j = 0; j < 16; j++) {
         this.data[i][j] = {};
         const button = document.createElement('button');
         button.setAttribute('aria-label', 'cell, empty');
         button.classList.add('pixel');
-        button.classList.add('off');
-        button.id = i+' ' +  j
         button.dataset.row = i;
         button.dataset.col = j;
         rowEl.appendChild(button);
@@ -139,20 +120,14 @@ class Board {
   
   // Toggles a particular dot from on to off.
   toggleCell(i,j, sound, uiButton) {
-    //0 - white
-//1 - yellow
-//2 - red 
-//3 - blue 
-//4 - grey
-    // if (dot.on) {
-    //   dot.on = 0;
-    // } else {
-    //   dot.on = sound;
-    // }
-  
-    let color = uiButton.dataset.color
-    check(i,j,color)  
-
+    const dot = this.data[i][j];
+    if (dot.on) {
+      dot.on = 0;
+    } else {
+      dot.on = sound;
+    }
+    
+    uiButton.setAttribute('aria-label', sound === 1 ? 'cell, synth' : 'cell, drums');
     this.draw();
   }
   
@@ -161,8 +136,8 @@ class Board {
     const sequence = {notes:[], quantizationInfo: {stepsPerQuarter: 4}};
     
     const drumPitches = [36, 38, 42, 46, 45, 48, 50, 49, 51, 35, 27, 29, 47, 55, 52, 44];
-    for (let i = 0; i < 26; i++) {
-      for (let j = 0; j < 26; j++) {
+    for (let i = 0; i < 16; i++) {
+      for (let j = 0; j < 16; j++) {
         // Found a synth note!
         if (this.data[i][j].on === 1) {
           sequence.notes.push(
@@ -213,32 +188,24 @@ class Board {
   
   // Paints the current state of the world.
   draw() {
-  //0 - white
-//1 - yellow
-//2 - red 
-//3 - blue 
-//4 - grey
     this._updateRipples();
-    for (let i = 0; i < 25; i++) {
+    
+    for (let i = 0; i < 16; i++) {
       const pixels = this.ui.rows[i].querySelectorAll('.pixel');
       
-      for (let j = 0; j<26; j++) {
+      for (let j = 0; j < 16; j++) {
         // Maybe it's a sound?
         if (this._paintSoundCell(this.data[i][j], pixels[j])) {
           continue;
         }
         // Maybe it's part of a ripple?
-
+        this._paintRippleCell(pixels[j], i, j);
       }
     }
   }
   
-  animate(currentColumn, noiseyMakey, speed) {
-    let arr = []
-    let note 
-    let sound = 0 
-    for (let i = 0; i < 25; i++) {
-      let toggled
+  animate(currentColumn, noiseyMakey) {
+    for (let i = 0; i < 16; i++) {
       const pixels = this.ui.rows[i].querySelectorAll('.pixel');
       this._clearPreviousAnimation(pixels);
       
@@ -247,30 +214,28 @@ class Board {
       // - empty, in which case we paint the green time bar.
       
       // Is the current cell at this time a sound?
-      let cell = this.data[i][currentColumn]
-      let id = i + ' ' + currentColumn
-      let doc = document.getElementById(id)
-       toggled = doc.classList.contains('off')
-      let sound = 1
-      if (sound&&!toggled) {
-
-        let n = i
-        console.log(id)
+      const sound = this.data[i][currentColumn].on
+      if (sound) {
         // Start a ripple from here!
         this.ripples.push({x: i, y: currentColumn, distance: 0, sound:sound});
+        
         // It's a note getting struck.
         pixels[currentColumn].classList.add('active');
-        let col = currentColumn
-        let delay = speed * i
-      noiseyMakey.playDrum(0)
       
-      }
+        // Play the note.
+        if (sound === 1) {
+          noiseyMakey.playSynth(i);
+        } else {
+          noiseyMakey.playDrum(i);
+        }
+      } else {
         // It's not a sound, it is a time bar.
         pixels[currentColumn].classList.add('bar');
-      
+      }
+    }
     this.draw();
   }
-}
+  
   // Remove animation artifacts like the green bar line and the ripples.
   clearAnimation() {
     this.ripples = [];
@@ -290,7 +255,7 @@ class Board {
   }
   
   _clearPreviousAnimation(row) {
-    for (let j = 0; j < 26; j++) {
+    for (let j = 0; j < 16; j++) {
       row[j].classList.remove('bar');
       row[j].classList.remove('active');
     }
@@ -309,38 +274,10 @@ class Board {
   
    // Displays the right sound on a UI cell, if it's on.
   _paintSoundCell(dataCell, uiCell) {
-
     let didIt = false;
-
+    if (dataCell.on) {
       uiCell.classList.add('on');
-      //0 - white
-//1 - yellow
-//2 - red 
-//3 - blue 
-//4 - grey
-let type  
-switch(dataCell.on) {
-  case 0: 
-   type = 'white'
-    break
-  case 1: 
-  type = "yellow"
-  break;
-  case 2:
-  type = "red"
-    break;
-  case 3:
-  type = "blue"
-    break;
-  case 4:
-  type = "grey"
-    break;
-  default:
-    type = "white"
-    break;
-}
-      uiCell.classList.add(type)
-      uiCell.dataset.color=type
+      
       // You may have clicked on this when it was part of a ripple.
       uiCell.classList.remove('ripple');
       
@@ -349,6 +286,10 @@ switch(dataCell.on) {
       uiCell.classList.remove('synth');
       uiCell.classList.add(dataCell.on === 1 ? 'synth' : 'drums');
       didIt = true;
+    } else {
+      uiCell.classList.remove('on');
+    }
+    return didIt;
   }
   
   _paintRippleCell(uiCell, i, j) {
