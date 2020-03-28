@@ -62,6 +62,7 @@ class NoiseyMakey {
   // TODO: should probably use magenta's synth for this, maybe:
   // this.magentaPlayer.playNote({startTime: which, endTime: which + 1, pitch: 35, velocity: 100, isDrum: false}, '16n');
   playSynth(which) {
+    console.log(which)
     this.synth.triggerAttackRelease(this.synthSounds[which], '26n');
   }
   
@@ -71,12 +72,12 @@ class NoiseyMakey {
   
   _makeASynth() {
     // Set up tone.
-    const synth = new Tone.PolySynth(16, Tone.Synth).toMaster();
+    const synth = new Tone.PolySynth(26, Tone.Synth).toMaster();
     return synth;
   }
   
   _makeAWham() {
-    const synth = new Tone.PolySynth(3, Tone.Synth, {
+    const synth = new Tone.PolySynth(6, Tone.Synth, {
 			"oscillator" : {
 				"type" : "fatsawtooth",
 				"count" : 3,
@@ -113,7 +114,7 @@ class Board {
     this.ui.container = document.getElementById('container');
     this.ui.container.innerHTML = '';
     
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 26; i++) {
       this.data.push([]);
       const rowEl = document.createElement('div');
       rowEl.classList.add('row');
@@ -138,7 +139,6 @@ class Board {
   
   // Toggles a particular dot from on to off.
   toggleCell(i,j, sound, uiButton) {
-    const dot = this.data[i][j];
     //0 - white
 //1 - yellow
 //2 - red 
@@ -161,7 +161,7 @@ class Board {
     const sequence = {notes:[], quantizationInfo: {stepsPerQuarter: 4}};
     
     const drumPitches = [36, 38, 42, 46, 45, 48, 50, 49, 51, 35, 27, 29, 47, 55, 52, 44];
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 26; i++) {
       for (let j = 0; j < 26; j++) {
         // Found a synth note!
         if (this.data[i][j].on === 1) {
@@ -233,8 +233,12 @@ class Board {
     }
   }
   
-  animate(currentColumn, noiseyMakey) {
-    for (let i = 0; i < 16; i++) {
+  animate(currentColumn, noiseyMakey, speed) {
+
+    let arr = []
+    let note 
+    let delay
+    for (let i = 0; i < 25; i++) {
       const pixels = this.ui.rows[i].querySelectorAll('.pixel');
       this._clearPreviousAnimation(pixels);
       
@@ -243,25 +247,37 @@ class Board {
       // - empty, in which case we paint the green time bar.
       
       // Is the current cell at this time a sound?
-      const sound = this.data[i][currentColumn].on
-      if (sound) {
+      let cell = this.data[i][currentColumn]
+      let id = currentColumn+ ' ' + i 
+      let doc = document.getElementById(id)
+
+      let toggled = doc.classList.contains('off')
+      let sound = 1
+      if (sound&&!toggled) {
         // Start a ripple from here!
         this.ripples.push({x: i, y: currentColumn, distance: 0, sound:sound});
         
         // It's a note getting struck.
         pixels[currentColumn].classList.add('active');
-      
+        note = 1
         // Play the note.
-        if (sound === 1) {
-          noiseyMakey.playSynth(i);
-        } else {
-          noiseyMakey.playDrum(i);
-        }
-      } else {
+        // if (sound === 1) {
+
+  
+        // } else {
+        //   noiseyMakey.playDrum(i);
+        // }
+      }
         // It's not a sound, it is a time bar.
         pixels[currentColumn].classList.add('bar');
-      }
+      
     }
+
+    if (!!note) {
+      console.log(note)
+    setTimeout(() => noiseyMakey.playDrum(note))
+    }
+
     this.draw();
   }
   
@@ -284,7 +300,7 @@ class Board {
   }
   
   _clearPreviousAnimation(row) {
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < 26; j++) {
       row[j].classList.remove('bar');
       row[j].classList.remove('active');
     }
@@ -303,9 +319,9 @@ class Board {
   
    // Displays the right sound on a UI cell, if it's on.
   _paintSoundCell(dataCell, uiCell) {
- 
+
     let didIt = false;
-    if (dataCell.on) {
+
       uiCell.classList.add('on');
       //0 - white
 //1 - yellow
@@ -343,10 +359,6 @@ switch(dataCell.on) {
       uiCell.classList.remove('synth');
       uiCell.classList.add(dataCell.on === 1 ? 'synth' : 'drums');
       didIt = true;
-    } else {
-      uiCell.classList.remove('on');
-    }
-    return didIt;
   }
   
   _paintRippleCell(uiCell, i, j) {

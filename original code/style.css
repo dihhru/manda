@@ -176,7 +176,7 @@ button.pixel {
  * Note pixels
  ***********************/
 .white  {
- background: white
+ background: wheat
 }
 .yellow  {
 background: yellow
@@ -188,7 +188,7 @@ background: yellow
   background: red;
 }
 .grey   {
-    background: grey
+    background: violet
 }
 
 /***********************
@@ -220,13 +220,13 @@ button.pixel.ripple.drums {
 } */
 
 .playing .pixel.on.active {
-  transform: scale(1.5);
   z-index:10;
 }
 
 .playing .bar {
   background: var(--green) !important; 
   opacity: 1 !important;
+  z-index: 100000;
 }
 
 @media (max-width: 500px) {

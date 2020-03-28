@@ -1,6 +1,6 @@
 let isMouseDown = false;
 let isAnimating = false;
-let animationSpeed = 100;
+let animationSpeed = 5000;
 
 const noiseyMakey = new NoiseyMakey();
 const board = new Board();
@@ -87,14 +87,14 @@ function animate() {
   
   // An animation step.
   function step() {
-    // Draw the board at this step.
-    board.animate(currentColumn, noiseyMakey);
-    
-    // Get ready for the next column.
-    currentColumn++;
+        currentColumn++;
     if (currentColumn === 26) {
       currentColumn = 0;
     }
+    // Draw the board at this step.
+    board.animate(currentColumn, noiseyMakey, animationSpeed);
+    
+    // Get ready for the next column.
     
     // Did we get paused mid step?
     if (isAnimating) {
@@ -254,7 +254,9 @@ let i = 0
   let next = Number(y + i)
   let id = x + ' ' + next 
   let cell = document.getElementById(id)
-  
+    if (!document.body.contains(cell)) {
+      break next
+    }
   let type = cell.dataset.color 
   if (type === color) {
     coords.push(next)
@@ -268,8 +270,10 @@ let i1=1
   prev:while (i1 < 26) {
   let next = Number(y - i1)
   let id = x + ' ' + next
-
   let cell = document.getElementById(id)
+    if (!document.body.contains(cell)) {
+      break prev
+    }
   let type = cell.dataset.color
   if (type === color) {
     coords.push(next)
@@ -326,67 +330,3 @@ break prev
   }
 
 
-
-
-//   let toggle1 = true
-// coords.map(
-//   function (y)  {
-//     let i = 0 
-//     while (i<26)  {
-//       let id = x + i + ' ' + y
-//     }
-
-  
-
-
-
-      // let id = x + ' ' + y 
-      // let doc = document.getElementById(id)
-      // let isToggled = doc.classList.contains('off')
-      // isToggled ?
-      //   doc.classList.remove('off') : doc.classList.add('off')
-
-
-
-
-
-//   loop1: while (i < 26) {
-//     if (toggle1) {
-//       let id = x + ' ' + Number(y - i)
-//       let cell = document.getElementById(id)
-//       let type = cell.dataset.color
-//       if (type === color) {
-//         coords.push(id)
-//       }
-//       else {
-//         toggle1 = false
-//         i = 0
-//       }
-//     }
-//     else {
-//       let id = x + ' ' + Number(y + i)
-//       let cell = document.getElementById(id)
-//       console.log(id)
-//       console.log(cell)
-//       let type = cell.dataset.color
-//       if (type === color) {
-//         coords.push(id)
-//       }
-//       else { break loop1 }
-//     }
-//     i++
-//   }
-
-// coords.map(function(x)  {
-//   let doc = document.getElementById(x)
-//   let isToggled = doc.classList.contains('off')
-//   isToggled ?
-//     doc.classList.remove('off') : doc.classList.add('off')
-// })
-// }
-// let prev = x - i
-// let doc = document.getElementById(prev + ' ' + y)
-// if (doc.dataset.color === color) {
-//   let isToggled = doc.classList.contains('off')
-//   isToggled ?
-//     doc.classList.remove('off') : doc.classList.add('off')
